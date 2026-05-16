@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "paths": {
+      "@rewards-audit/db": ["packages/db/dist/index.d.ts"],
+      "@rewards-audit/rewards-engine": [
+        "packages/rewards-engine/dist/index.d.ts"
+      ],
+      "@rewards-audit/shared-types": ["packages/shared-types/dist/index.d.ts"]
+    },
+    "tsBuildInfoFile": "dist/.tsbuildinfo"
+  },
+  "include": ["src/**/*.ts"]
+}

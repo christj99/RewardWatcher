@@ -1,0 +1,61 @@
+{
+  "name": "rewards-audit",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Trust-first rewards audit system monorepo.",
+  "packageManager": "pnpm@9.15.4",
+  "scripts": {
+    "dev": "pnpm --filter @rewards-audit/api dev",
+    "dev:web": "pnpm --filter @rewards-audit/web dev",
+    "dev:admin": "pnpm --filter @rewards-audit/admin dev",
+    "dev:extension": "pnpm --filter @rewards-audit/extension dev",
+    "start:api": "node apps/api/dist/index.js",
+    "build": "pnpm db:generate && pnpm -r build",
+    "test": "pnpm -r --workspace-concurrency=1 test",
+    "lint": "eslint . && pnpm -r typecheck",
+    "format": "prettier --write .",
+    "ci": "pnpm install --frozen-lockfile && pnpm prisma validate && pnpm db:generate && pnpm lint && pnpm test && pnpm build",
+    "check:prod-config": "tsx scripts/check-production-config.ts",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "db:migrate:dev": "prisma migrate dev",
+    "db:seed": "prisma db seed",
+    "db:studio": "prisma studio",
+    "evals:seed-fixtures": "tsx scripts/generate-eval-fixtures.ts",
+    "evals:kill-test": "tsx scripts/run-kill-test.ts",
+    "jobs:weekly-audit-email": "tsx scripts/send-weekly-audit-emails.ts",
+    "jobs:reminder-digest": "tsx scripts/send-reminder-digests.ts",
+    "jobs:admin-alerts": "tsx scripts/send-admin-alerts.ts",
+    "smoke:api": "tsx scripts/smoke/smoke-api-core.ts",
+    "smoke:user": "tsx scripts/smoke/smoke-user-flow.ts",
+    "smoke:admin": "tsx scripts/smoke/smoke-admin-flow.ts",
+    "smoke:privacy": "tsx scripts/smoke/smoke-privacy-flow.ts",
+    "smoke:jobs": "tsx scripts/smoke/smoke-jobs-flow.ts",
+    "smoke:all": "pnpm smoke:api && pnpm smoke:user && pnpm smoke:admin && pnpm smoke:privacy && pnpm smoke:jobs",
+    "beta:seed-demo": "tsx scripts/seed-beta-demo.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@prisma/client": "6.1.0",
+    "@types/node": "22.10.2",
+    "eslint": "10.3.0",
+    "globals": "17.6.0",
+    "prettier": "3.4.2",
+    "prisma": "6.1.0",
+    "tsx": "4.19.2",
+    "typescript": "5.7.2",
+    "typescript-eslint": "8.59.2",
+    "vitest": "2.1.8"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "esbuild",
+      "prisma"
+    ]
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  }
+}

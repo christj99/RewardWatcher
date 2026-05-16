@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Rewards Audit",
+  "description": "Shows deterministic card recommendations at checkout.",
+  "version": "0.1.0",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "http://localhost:3000/*",
+    "http://localhost:5173/*",
+    "https://*/*",
+    "http://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["contentScript.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "options_page": "options.html"
+}

@@ -1,0 +1,1483 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum CardNetwork {
+  VISA
+  MASTERCARD
+  AMEX
+  DISCOVER
+  OTHER
+}
+
+enum SourceType {
+  ISSUER_PAGE
+  TERMS_DOC
+  CURATOR_RESEARCH
+  USER_CORRECTION
+  TRANSACTION_OUTCOME
+  COMMUNITY_REPORT
+  OTHER
+}
+
+enum CurrencyType {
+  CASHBACK
+  TRANSFERABLE_POINTS
+  AIRLINE_MILES
+  HOTEL_POINTS
+  OTHER
+}
+
+enum Lens {
+  CASH_OUT
+  PRACTICAL
+  ASPIRATIONAL
+}
+
+enum ConfidenceLevel {
+  HIGH
+  MEDIUM
+  LOW
+  UNKNOWN
+}
+
+enum MerchantCategory {
+  DINING
+  GROCERY
+  TRAVEL
+  AIRFARE
+  HOTEL
+  RIDESHARE
+  GAS
+  DRUGSTORE
+  STREAMING
+  ONLINE_RETAIL
+  WHOLESALE_CLUB
+  GENERAL
+  OTHER
+  UNKNOWN
+}
+
+enum CapPeriod {
+  MONTHLY
+  QUARTERLY
+  ANNUAL
+  LIFETIME
+}
+
+enum BenefitType {
+  TRAVEL_CREDIT
+  PURCHASE_PROTECTION
+  EXTENDED_WARRANTY
+  LOUNGE_ACCESS
+  TRIP_INSURANCE
+  STATEMENT_CREDIT
+  OTHER
+}
+
+enum Recurrence {
+  MONTHLY
+  QUARTERLY
+  SEMIANNUAL
+  ANNUAL
+  ONE_TIME
+}
+
+enum UrlPatternType {
+  DOMAIN
+  URL_CONTAINS
+  REGEX
+}
+
+enum PostingDataSource {
+  CURATOR_RESEARCH
+  USER_CORRECTION
+  TRANSACTION_OUTCOME
+  IMPORTED_DATA
+  OTHER
+}
+
+enum PreferenceType {
+  PREFER_CARD
+  AVOID_CARD
+  IGNORE_CATEGORY
+  CUSTOM_NOTE
+}
+
+enum RecommendationContext {
+  ONLINE_CHECKOUT
+  MANUAL_LOOKUP
+  IMPORTED_TRANSACTION_REPLAY
+  OTHER
+}
+
+enum TransactionSource {
+  MANUAL
+  CSV_IMPORT
+  PLAID
+  TEST_FIXTURE
+}
+
+enum OutcomeType {
+  CAPTURED_OPTIMAL
+  USER_MISSED_VALUE
+  RECOMMENDATION_ERROR
+  UNMATCHED
+  USER_OVERRIDE
+  INCONCLUSIVE
+}
+
+enum CorrectionType {
+  WRONG_MERCHANT
+  WRONG_CATEGORY
+  WRONG_CARD_RULE
+  MISSED_OFFER
+  CAP_NOT_HANDLED
+  PERSONAL_PREFERENCE
+  OTHER
+}
+
+enum CorrectionStatus {
+  OPEN
+  IN_REVIEW
+  RESOLVED
+  REJECTED
+}
+
+enum ReviewTaskType {
+  CARD_RULE_REVIEW
+  MERCHANT_MAPPING_REVIEW
+  POSTING_PROFILE_REVIEW
+  OFFER_REVIEW
+  OTHER
+}
+
+enum ReviewTaskStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  REJECTED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum PlaidConnectionStatus {
+  ACTIVE
+  ERROR
+  DISCONNECTED
+}
+
+enum PlaidSyncStatus {
+  RUNNING
+  SUCCEEDED
+  FAILED
+}
+
+enum ReminderType {
+  ANNUAL_FEE
+  WELCOME_BONUS_DEADLINE
+  STATEMENT_CREDIT
+  CUSTOM
+}
+
+enum ReminderStatus {
+  SCHEDULED
+  DUE
+  COMPLETED
+  DISMISSED
+}
+
+enum ReminderRecurrence {
+  NONE
+  MONTHLY
+  QUARTERLY
+  SEMIANNUAL
+  ANNUAL
+}
+
+enum ReminderSource {
+  MANUAL
+  GENERATED
+  STATEMENT_CREDIT
+  WELCOME_BONUS
+  ANNUAL_FEE
+}
+
+enum StatementCreditUsageStatus {
+  UNUSED
+  PARTIALLY_USED
+  USED
+  UNKNOWN
+}
+
+enum StatementCreditUsageSource {
+  MANUAL
+  TRANSACTION_AUDIT
+  PLAID
+  IMPORTED_TRANSACTION
+  GENERATED
+}
+
+enum IssuerOfferType {
+  STATEMENT_CREDIT
+  BONUS_POINTS
+  BONUS_MULTIPLIER
+  DISCOUNT
+  OTHER
+}
+
+enum UserOfferStatus {
+  AVAILABLE
+  ACTIVATED
+  USED
+  EXPIRED
+  DISMISSED
+}
+
+enum AdminAuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  RETIRE
+  EXPIRE
+  RESOLVE
+  REJECT
+  LINK
+  UNLINK
+  OTHER
+}
+
+enum ConsentType {
+  PLAID_TRANSACTIONS
+  EMAIL_REMINDERS
+  TERMS_OF_SERVICE
+  PRIVACY_POLICY
+  WEEKLY_AUDIT
+  OFFER_TRACKING
+}
+
+enum PrivacyRequestType {
+  DELETE_ACCOUNT
+  DELETE_PLAID_DATA
+  DELETE_TRANSACTIONS
+  EXPORT_DATA
+}
+
+enum PrivacyRequestStatus {
+  REQUESTED
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum SubscriptionStatus {
+  NONE
+  INCOMPLETE
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  UNPAID
+  PAUSED
+}
+
+enum EntitlementKey {
+  BASIC_RECOMMENDATIONS
+  FULL_TRANSACTION_AUDIT
+  WEEKLY_AUDIT_REPORT
+  STATEMENT_CREDIT_TRACKING
+  OFFER_AWARE_RECOMMENDATIONS
+  ADVANCED_LENSES
+  PLAID_SYNC
+  EXTENDED_HISTORY
+}
+
+enum EntitlementSource {
+  FREE
+  SUBSCRIPTION
+  MANUAL_GRANT
+  FOUNDING_BETA
+}
+
+enum StripeWebhookStatus {
+  RECEIVED
+  PROCESSED
+  FAILED
+}
+
+enum AuthEventType {
+  REGISTER
+  LOGIN_SUCCESS
+  LOGIN_FAILURE
+  LOGOUT
+  PASSWORD_RESET_REQUEST
+  PASSWORD_RESET_SUCCESS
+  SESSION_REVOKED
+  EXTENSION_TOKEN_CREATED
+  EXTENSION_TOKEN_USED
+}
+
+enum EmailType {
+  PASSWORD_RESET
+  WEEKLY_AUDIT
+  REMINDER_DIGEST
+  ADMIN_ALERT
+  BILLING_NOTICE
+  PRIVACY_NOTICE
+}
+
+enum EmailStatus {
+  QUEUED
+  SENT
+  SKIPPED
+  FAILED
+}
+
+enum NotificationChannel {
+  EMAIL
+}
+
+enum NotificationType {
+  PASSWORD_RESET
+  WEEKLY_AUDIT
+  REMINDER_DIGEST
+  BILLING_NOTICE
+  PRIVACY_NOTICE
+}
+
+enum ScheduledJobName {
+  WEEKLY_AUDIT_EMAIL
+  REMINDER_DIGEST
+  ADMIN_ALERT
+  PLAID_SYNC_ALL
+  STATEMENT_CREDIT_USAGE_GENERATION
+  EVAL_KILL_TEST_SNAPSHOT
+}
+
+enum ScheduledJobStatus {
+  RUNNING
+  SUCCEEDED
+  FAILED
+  SKIPPED
+}
+
+enum ScheduledJobTrigger {
+  MANUAL
+  SCHEDULED
+  CLI
+}
+
+enum BetaUserStatus {
+  INVITED
+  ACTIVE
+  STUCK
+  CHURNED
+  PAUSED
+}
+
+enum FeedbackType {
+  BUG
+  CONFUSING_RECOMMENDATION
+  WRONG_RECOMMENDATION
+  PLAID_ISSUE
+  BILLING_ISSUE
+  EXTENSION_ISSUE
+  PRIVACY_ISSUE
+  FEATURE_REQUEST
+  GENERAL_FEEDBACK
+}
+
+enum FeedbackSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum FeedbackStatus {
+  OPEN
+  TRIAGED
+  IN_PROGRESS
+  RESOLVED
+  REJECTED
+}
+
+enum SupportNoteVisibility {
+  INTERNAL
+}
+
+enum BetaEventType {
+  USER_REGISTERED
+  USER_LOGGED_IN
+  WALLET_CARD_ADDED
+  RECOMMENDATION_CREATED
+  CORRECTION_SUBMITTED
+  TRANSACTION_IMPORTED
+  TRANSACTION_AUDITED
+  WEEKLY_AUDIT_VIEWED
+  PLAID_CONNECTED
+  PLAID_SYNC_COMPLETED
+  CHECKOUT_EXTENSION_RECOMMENDATION_SHOWN
+  BILLING_CHECKOUT_STARTED
+  PRIVACY_DELETION_REQUESTED
+  FEEDBACK_SUBMITTED
+}
+
+enum BetaEventSource {
+  API
+  WEB
+  ADMIN
+  EXTENSION
+  JOB
+}
+
+model User {
+  id                            String                     @id @default(cuid())
+  email                         String                     @unique
+  displayName                   String?
+  isAdmin                       Boolean                    @default(false)
+  plaidBetaEnabled              Boolean                    @default(false)
+  createdAt                     DateTime                   @default(now())
+  updatedAt                     DateTime                   @updatedAt
+  userCards                     UserCard[]
+  recommendationEvents          RecommendationEvent[]
+  transactions                  Transaction[]
+  recommendationOutcomes        RecommendationOutcome[]
+  recommendationCorrections     RecommendationCorrection[]
+  capLedgers                    CapLedger[]
+  userPreferenceRules           UserPreferenceRule[]
+  plaidConnections              PlaidConnection[]
+  plaidAccounts                 PlaidAccount[]
+  plaidSyncRuns                 PlaidSyncRun[]
+  reminders                     Reminder[]
+  statementCreditUsages         StatementCreditUsage[]
+  offerActivations              UserOfferActivation[]
+  adminAuditLogs                AdminAuditLog[]
+  consentRecords                ConsentRecord[]
+  privacyRequests               PrivacyRequest[]
+  subscriptions                 Subscription[]
+  entitlementGrants             EntitlementGrant[]
+  authCredential                AuthCredential?
+  authSessions                  AuthSession[]
+  passwordResetTokens           PasswordResetToken[]
+  authEvents                    AuthEvent[]
+  extensionAuthTokens           ExtensionAuthToken[]
+  emailLogs                     EmailLog[]
+  notificationPreferences       NotificationPreference[]
+  betaProfile                   UserBetaProfile?
+  feedbackReports               FeedbackReport[]          @relation("FeedbackReportUser")
+  assignedFeedbackReports       FeedbackReport[]          @relation("FeedbackReportAssignedAdmin")
+  supportNotes                  SupportNote[]             @relation("SupportNoteUser")
+  authoredSupportNotes          SupportNote[]             @relation("SupportNoteAdmin")
+  betaEvents                    BetaEvent[]
+
+  @@index([email])
+}
+
+model BetaCohort {
+  id          String             @id @default(cuid())
+  name        String
+  slug        String             @unique
+  description String?
+  startsAt    DateTime?
+  endsAt      DateTime?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  betaProfiles UserBetaProfile[]
+}
+
+model UserBetaProfile {
+  id                       String          @id @default(cuid())
+  userId                   String          @unique
+  cohortId                 String?
+  status                   BetaUserStatus  @default(INVITED)
+  invitedAt                DateTime?
+  activatedAt              DateTime?
+  firstRecommendationAt    DateTime?
+  firstTransactionAuditAt  DateTime?
+  firstPlaidSyncAt         DateTime?
+  notes                    String?
+  tags                     String[]
+  createdAt                DateTime        @default(now())
+  updatedAt                DateTime        @updatedAt
+  user                     User            @relation(fields: [userId], references: [id])
+  cohort                   BetaCohort?     @relation(fields: [cohortId], references: [id])
+
+  @@index([cohortId])
+  @@index([status])
+}
+
+model AuthCredential {
+  id                 String    @id @default(cuid())
+  userId             String    @unique
+  passwordHash       String
+  passwordUpdatedAt  DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  user               User      @relation(fields: [userId], references: [id])
+}
+
+model AuthSession {
+  id                String    @id @default(cuid())
+  userId            String
+  sessionTokenHash  String    @unique
+  userAgent         String?
+  ipAddress         String?
+  expiresAt         DateTime
+  revokedAt         DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  user              User      @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@index([revokedAt])
+}
+
+model PasswordResetToken {
+  id         String    @id @default(cuid())
+  userId     String
+  tokenHash  String    @unique
+  expiresAt  DateTime
+  usedAt     DateTime?
+  createdAt  DateTime  @default(now())
+  user       User      @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model AuthEvent {
+  id         String         @id @default(cuid())
+  userId     String?
+  eventType  AuthEventType
+  email      String?
+  ipAddress  String?
+  userAgent  String?
+  metadata   Json?
+  createdAt  DateTime       @default(now())
+  user       User?          @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([email])
+  @@index([eventType])
+  @@index([createdAt])
+}
+
+model ExtensionAuthToken {
+  id          String    @id @default(cuid())
+  userId      String
+  tokenHash   String    @unique
+  expiresAt   DateTime
+  usedAt      DateTime?
+  revokedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@index([usedAt])
+  @@index([revokedAt])
+}
+
+model EmailLog {
+  id                 String       @id @default(cuid())
+  userId             String?
+  toEmailRedacted    String
+  emailType          EmailType
+  subject            String
+  status             EmailStatus
+  provider           String
+  providerMessageId  String?
+  idempotencyKey     String?      @unique
+  metadata           Json?
+  errorMessage       String?
+  sentAt             DateTime?
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+  user               User?        @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([emailType])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model NotificationPreference {
+  id                String               @id @default(cuid())
+  userId            String
+  channel           NotificationChannel
+  notificationType  NotificationType
+  enabled           Boolean              @default(true)
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  user              User                 @relation(fields: [userId], references: [id])
+
+  @@unique([userId, channel, notificationType])
+  @@index([userId])
+}
+
+model ScheduledJobRun {
+  id              String               @id @default(cuid())
+  jobName         ScheduledJobName
+  status          ScheduledJobStatus
+  triggeredBy     ScheduledJobTrigger
+  startedAt       DateTime
+  finishedAt      DateTime?
+  durationMs      Int?
+  idempotencyKey  String?              @unique
+  result          Json?
+  errorMessage    String?
+  metadata        Json?
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+
+  @@index([jobName])
+  @@index([status])
+  @@index([startedAt])
+  @@index([idempotencyKey])
+}
+
+model ScheduledJobLock {
+  id          String            @id @default(cuid())
+  jobName     ScheduledJobName  @unique
+  lockedAt    DateTime
+  lockedBy    String
+  expiresAt   DateTime
+  metadata    Json?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
+
+model FeedbackReport {
+  id                            String            @id @default(cuid())
+  userId                        String?
+  feedbackType                  FeedbackType
+  severity                      FeedbackSeverity  @default(MEDIUM)
+  status                        FeedbackStatus    @default(OPEN)
+  title                         String
+  message                       String
+  pageUrl                       String?
+  userAgent                     String?
+  context                       Json?
+  linkedRecommendationEventId   String?
+  linkedTransactionId           String?
+  linkedOutcomeId               String?
+  linkedPlaidConnectionId       String?
+  linkedBillingSubscriptionId   String?
+  assignedAdminUserId           String?
+  resolutionNotes               String?
+  createdAt                     DateTime          @default(now())
+  updatedAt                     DateTime          @updatedAt
+  resolvedAt                    DateTime?
+  user                          User?             @relation("FeedbackReportUser", fields: [userId], references: [id])
+  linkedRecommendationEvent     RecommendationEvent? @relation(fields: [linkedRecommendationEventId], references: [id])
+  linkedTransaction             Transaction?      @relation(fields: [linkedTransactionId], references: [id])
+  linkedOutcome                 RecommendationOutcome? @relation(fields: [linkedOutcomeId], references: [id])
+  assignedAdminUser             User?             @relation("FeedbackReportAssignedAdmin", fields: [assignedAdminUserId], references: [id])
+
+  @@index([userId])
+  @@index([feedbackType])
+  @@index([severity])
+  @@index([status])
+  @@index([createdAt])
+  @@index([assignedAdminUserId])
+  @@index([linkedRecommendationEventId])
+  @@index([linkedTransactionId])
+  @@index([linkedOutcomeId])
+}
+
+model SupportNote {
+  id          String                 @id @default(cuid())
+  userId      String
+  adminUserId String
+  note        String
+  visibility  SupportNoteVisibility  @default(INTERNAL)
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
+  user        User                   @relation("SupportNoteUser", fields: [userId], references: [id])
+  adminUser   User                   @relation("SupportNoteAdmin", fields: [adminUserId], references: [id])
+
+  @@index([userId])
+  @@index([adminUserId])
+  @@index([createdAt])
+}
+
+model BetaEvent {
+  id        String           @id @default(cuid())
+  userId    String?
+  eventType BetaEventType
+  source    BetaEventSource
+  metadata  Json?
+  createdAt DateTime         @default(now())
+  user      User?            @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([eventType])
+  @@index([source])
+  @@index([createdAt])
+}
+
+model Issuer {
+  id                      String                   @id @default(cuid())
+  name                    String
+  slug                    String                   @unique
+  websiteUrl              String?
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+  cards                   Card[]
+  merchantPostingProfiles MerchantPostingProfile[]
+  issuerOffers            IssuerOffer[]
+}
+
+model Card {
+  id                       String                  @id @default(cuid())
+  issuerId                 String
+  name                     String
+  slug                     String                  @unique
+  network                  CardNetwork?
+  annualFeeCents           Int?
+  isActive                 Boolean                 @default(true)
+  createdAt                DateTime                @default(now())
+  updatedAt                DateTime                @updatedAt
+  issuer                   Issuer                  @relation(fields: [issuerId], references: [id])
+  versions                 CardVersion[]
+  earningRules             EarningRule[]
+  benefits                 Benefit[]
+  statementCredits         StatementCredit[]
+  userCards                UserCard[]
+  userPreferenceRules      UserPreferenceRule[]
+  recommendationEvents     RecommendationEvent[]
+  issuerOffers             IssuerOffer[]
+
+  @@index([issuerId])
+}
+
+model CardVersion {
+  id                 String            @id @default(cuid())
+  cardId             String
+  versionName        String
+  effectiveFrom      DateTime
+  effectiveTo        DateTime?
+  annualFeeCents     Int?
+  notes              String?
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  card               Card              @relation(fields: [cardId], references: [id])
+  earningRules       EarningRule[]
+  benefits           Benefit[]
+  statementCredits   StatementCredit[]
+
+  @@unique([cardId, versionName])
+  @@index([cardId])
+}
+
+model RuleSource {
+  id                       String                   @id @default(cuid())
+  sourceType               SourceType
+  title                    String
+  url                      String?
+  retrievedAt              DateTime?
+  verifiedAt               DateTime?
+  notes                    String?
+  createdBy                String?
+  createdAt                DateTime                 @default(now())
+  updatedAt                DateTime                 @updatedAt
+  earningRules             EarningRule[]
+  benefits                 Benefit[]
+  statementCredits         StatementCredit[]
+  currencyValuations       CurrencyValuation[]
+  merchantUrlPatterns      MerchantUrlPattern[]
+  merchantPostingProfiles  MerchantPostingProfile[]
+  issuerOffers             IssuerOffer[]
+
+  @@unique([sourceType, title])
+}
+
+model Currency {
+  id              String              @id @default(cuid())
+  code            String              @unique
+  name            String
+  currencyType    CurrencyType
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  valuations      CurrencyValuation[]
+  earningRules    EarningRule[]
+  issuerOffers     IssuerOffer[]
+}
+
+model CurrencyValuation {
+  id             String          @id @default(cuid())
+  currencyId     String
+  lens           Lens
+  centsPerPoint  Decimal         @db.Decimal(8, 4)
+  confidence     ConfidenceLevel
+  sourceId       String?
+  effectiveFrom  DateTime
+  effectiveTo    DateTime?
+  notes          String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  currency       Currency        @relation(fields: [currencyId], references: [id])
+  source         RuleSource?     @relation(fields: [sourceId], references: [id])
+
+  @@unique([currencyId, lens, effectiveFrom])
+  @@index([sourceId])
+}
+
+model IssuerOffer {
+  id                  String                 @id @default(cuid())
+  issuerId            String?
+  cardId              String?
+  merchantId          String?
+  category            MerchantCategory?
+  title               String
+  description         String
+  offerType           IssuerOfferType
+  valueCents          Int?
+  bonusPoints         Int?
+  bonusCurrencyId     String?
+  bonusMultiplier     Decimal?               @db.Decimal(8, 4)
+  minSpendCents       Int?
+  maxRewardCents      Int?
+  activationRequired  Boolean                @default(true)
+  startsAt            DateTime?
+  endsAt              DateTime?
+  confidence          ConfidenceLevel
+  sourceId            String?
+  termsUrl            String?
+  notes               String?
+  createdAt           DateTime               @default(now())
+  updatedAt           DateTime               @updatedAt
+  issuer              Issuer?                @relation(fields: [issuerId], references: [id])
+  card                Card?                  @relation(fields: [cardId], references: [id])
+  merchant            Merchant?              @relation(fields: [merchantId], references: [id])
+  bonusCurrency       Currency?              @relation(fields: [bonusCurrencyId], references: [id])
+  source              RuleSource?            @relation(fields: [sourceId], references: [id])
+  userActivations     UserOfferActivation[]
+
+  @@index([issuerId])
+  @@index([cardId])
+  @@index([merchantId])
+  @@index([category])
+  @@index([startsAt])
+  @@index([endsAt])
+  @@index([confidence])
+}
+
+model EarningRule {
+  id                  String            @id @default(cuid())
+  cardId              String
+  cardVersionId       String?
+  rewardCurrencyId    String
+  category            MerchantCategory?
+  merchantId          String?
+  multiplier          Decimal           @db.Decimal(8, 4)
+  baseRateMultiplier  Decimal?          @db.Decimal(8, 4)
+  capAmountCents      Int?
+  capPeriod           CapPeriod?
+  activationRequired  Boolean           @default(false)
+  startsAt            DateTime?
+  endsAt              DateTime?
+  confidence          ConfidenceLevel
+  sourceId            String?
+  notes               String?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  card                Card              @relation(fields: [cardId], references: [id])
+  cardVersion         CardVersion?      @relation(fields: [cardVersionId], references: [id])
+  rewardCurrency      Currency          @relation(fields: [rewardCurrencyId], references: [id])
+  merchant            Merchant?         @relation(fields: [merchantId], references: [id])
+  source              RuleSource?       @relation(fields: [sourceId], references: [id])
+  capLedgers          CapLedger[]
+
+  @@index([cardId])
+  @@index([cardVersionId])
+  @@index([rewardCurrencyId])
+  @@index([merchantId])
+  @@index([sourceId])
+  @@index([category])
+}
+
+model Benefit {
+  id                   String          @id @default(cuid())
+  cardId               String
+  cardVersionId        String?
+  benefitType          BenefitType
+  name                 String
+  description          String
+  estimatedValueCents  Int?
+  confidence           ConfidenceLevel
+  sourceId             String?
+  startsAt             DateTime?
+  endsAt               DateTime?
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+  card                 Card            @relation(fields: [cardId], references: [id])
+  cardVersion          CardVersion?    @relation(fields: [cardVersionId], references: [id])
+  source               RuleSource?     @relation(fields: [sourceId], references: [id])
+
+  @@index([cardId])
+  @@index([cardVersionId])
+  @@index([sourceId])
+}
+
+model StatementCredit {
+  id                  String            @id @default(cuid())
+  cardId              String
+  cardVersionId       String?
+  name                String
+  description         String
+  amountCents         Int
+  recurrence          Recurrence
+  merchantId          String?
+  category            MerchantCategory?
+  activationRequired  Boolean           @default(false)
+  confidence          ConfidenceLevel
+  sourceId            String?
+  startsAt            DateTime?
+  endsAt              DateTime?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  card                Card              @relation(fields: [cardId], references: [id])
+  cardVersion         CardVersion?      @relation(fields: [cardVersionId], references: [id])
+  merchant            Merchant?         @relation(fields: [merchantId], references: [id])
+  source              RuleSource?       @relation(fields: [sourceId], references: [id])
+  reminders           Reminder[]
+  usages              StatementCreditUsage[]
+
+  @@index([cardId])
+  @@index([cardVersionId])
+  @@index([merchantId])
+  @@index([sourceId])
+}
+
+model Merchant {
+  id                       String                   @id @default(cuid())
+  name                     String
+  slug                     String                   @unique
+  category                 MerchantCategory
+  websiteUrl               String?
+  createdAt                DateTime                 @default(now())
+  updatedAt                DateTime                 @updatedAt
+  urlPatterns              MerchantUrlPattern[]
+  postingProfiles          MerchantPostingProfile[]
+  earningRules             EarningRule[]
+  statementCredits         StatementCredit[]
+  recommendationEvents     RecommendationEvent[]
+  transactions             Transaction[]
+  userPreferenceRules      UserPreferenceRule[]
+  issuerOffers             IssuerOffer[]
+}
+
+model MerchantUrlPattern {
+  id             String           @id @default(cuid())
+  merchantId     String
+  pattern        String
+  patternType    UrlPatternType
+  confidence     ConfidenceLevel
+  sourceId       String?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  merchant       Merchant         @relation(fields: [merchantId], references: [id])
+  source         RuleSource?      @relation(fields: [sourceId], references: [id])
+
+  @@unique([merchantId, pattern, patternType])
+  @@index([merchantId])
+  @@index([sourceId])
+}
+
+model MerchantPostingProfile {
+  id                 String             @id @default(cuid())
+  merchantId         String
+  issuerId           String?
+  network            CardNetwork?
+  observedCategory   MerchantCategory
+  observedMcc        String?
+  dataSource         PostingDataSource
+  confidence         ConfidenceLevel
+  observationCount   Int                @default(0)
+  lastObservedAt     DateTime?
+  sourceId           String?
+  notes              String?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  merchant           Merchant           @relation(fields: [merchantId], references: [id])
+  issuer             Issuer?            @relation(fields: [issuerId], references: [id])
+  source             RuleSource?        @relation(fields: [sourceId], references: [id])
+
+  @@index([merchantId])
+  @@index([issuerId])
+  @@index([sourceId])
+}
+
+model UserCard {
+  id                              String                   @id @default(cuid())
+  userId                          String
+  cardId                          String
+  nickname                        String?
+  openedAt                        DateTime?
+  annualFeeDueMonth               Int?
+  welcomeBonusDeadline            DateTime?
+  isActive                        Boolean                  @default(true)
+  createdAt                       DateTime                 @default(now())
+  updatedAt                       DateTime                 @updatedAt
+  user                            User                     @relation(fields: [userId], references: [id])
+  card                            Card                     @relation(fields: [cardId], references: [id])
+  capLedgers                      CapLedger[]
+  recommendationEventsAsRecommended RecommendationEvent[]
+  transactions                    Transaction[]
+  outcomesAsActual                RecommendationOutcome[]  @relation("OutcomeActualUserCard")
+  outcomesAsBest                  RecommendationOutcome[]  @relation("OutcomeBestUserCard")
+  outcomesAsRecommended           RecommendationOutcome[]  @relation("OutcomeRecommendedUserCard")
+  plaidAccounts                   PlaidAccount[]
+  reminders                       Reminder[]
+  statementCreditUsages           StatementCreditUsage[]
+  offerActivations                UserOfferActivation[]
+
+  @@unique([userId, cardId])
+  @@index([userId])
+  @@index([cardId])
+}
+
+model UserOfferActivation {
+  id             String          @id @default(cuid())
+  userId         String
+  issuerOfferId  String
+  userCardId     String?
+  status         UserOfferStatus @default(AVAILABLE)
+  activatedAt    DateTime?
+  usedAt         DateTime?
+  dismissedAt    DateTime?
+  expiresAt      DateTime?
+  notes          String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  user           User            @relation(fields: [userId], references: [id])
+  issuerOffer    IssuerOffer     @relation(fields: [issuerOfferId], references: [id])
+  userCard       UserCard?       @relation(fields: [userCardId], references: [id])
+
+  @@unique([userId, issuerOfferId, userCardId])
+  @@index([userId])
+  @@index([issuerOfferId])
+  @@index([userCardId])
+  @@index([status])
+  @@index([expiresAt])
+}
+
+model CapLedger {
+  id                String       @id @default(cuid())
+  userId            String
+  userCardId        String
+  earningRuleId     String
+  periodStart       DateTime
+  periodEnd         DateTime
+  usedAmountCents   Int          @default(0)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  user              User         @relation(fields: [userId], references: [id])
+  userCard          UserCard     @relation(fields: [userCardId], references: [id])
+  earningRule       EarningRule  @relation(fields: [earningRuleId], references: [id])
+
+  @@unique([userCardId, earningRuleId, periodStart])
+  @@index([userId])
+  @@index([earningRuleId])
+}
+
+model UserPreferenceRule {
+  id              String            @id @default(cuid())
+  userId          String
+  cardId          String?
+  merchantId      String?
+  category        MerchantCategory?
+  preferenceType  PreferenceType
+  reason          String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  user            User              @relation(fields: [userId], references: [id])
+  card            Card?             @relation(fields: [cardId], references: [id])
+  merchant        Merchant?         @relation(fields: [merchantId], references: [id])
+
+  @@index([userId])
+  @@index([cardId])
+  @@index([merchantId])
+}
+
+model RecommendationEvent {
+  id                       String                    @id @default(cuid())
+  userId                   String
+  merchantId               String?
+  merchantNameInput        String?
+  merchantUrlInput         String?
+  purchaseAmountCents      Int?
+  context                  RecommendationContext
+  lens                     Lens
+  recommendedUserCardId    String?
+  recommendedCardId        String
+  expectedCategory         MerchantCategory
+  expectedValueCents       Decimal                   @db.Decimal(12, 4)
+  confidence               ConfidenceLevel
+  explanation              String
+  inputSnapshot            Json
+  rankingSnapshot          Json
+  ruleSnapshot             Json
+  createdAt                DateTime                  @default(now())
+  user                     User                      @relation(fields: [userId], references: [id])
+  merchant                 Merchant?                 @relation(fields: [merchantId], references: [id])
+  recommendedUserCard      UserCard?                 @relation(fields: [recommendedUserCardId], references: [id])
+  recommendedCard          Card                      @relation(fields: [recommendedCardId], references: [id])
+  outcomes                 RecommendationOutcome[]
+  corrections              RecommendationCorrection[]
+  feedbackReports          FeedbackReport[]
+
+  @@index([userId, createdAt])
+  @@index([merchantId])
+  @@index([recommendedUserCardId])
+  @@index([recommendedCardId])
+}
+
+model Transaction {
+  id                      String                    @id @default(cuid())
+  userId                  String
+  userCardId              String?
+  merchantId              String?
+  rawMerchantName         String
+  normalizedMerchantName  String?
+  amountCents             Int
+  currencyCode            String                    @default("USD")
+  transactionDate         DateTime
+  postedDate              DateTime?
+  source                  TransactionSource
+  externalId              String?
+  observedCategory        MerchantCategory?
+  observedMcc             String?
+  rawData                 Json?
+  createdAt               DateTime                  @default(now())
+  updatedAt               DateTime                  @updatedAt
+  user                    User                      @relation(fields: [userId], references: [id])
+  userCard                UserCard?                 @relation(fields: [userCardId], references: [id])
+  merchant                Merchant?                 @relation(fields: [merchantId], references: [id])
+  outcomes                RecommendationOutcome[]
+  corrections             RecommendationCorrection[]
+  feedbackReports         FeedbackReport[]
+
+  @@index([userId, transactionDate])
+  @@index([userId, source, externalId])
+  @@index([userCardId])
+  @@index([merchantId])
+}
+
+model RecommendationOutcome {
+  id                         String                @id @default(cuid())
+  userId                     String
+  recommendationEventId      String?
+  transactionId              String
+  outcomeType                OutcomeType
+  actualUserCardId           String?
+  bestUserCardId             String?
+  recommendedUserCardId      String?
+  expectedValueCents         Decimal?              @db.Decimal(12, 4)
+  capturedValueCents         Decimal?              @db.Decimal(12, 4)
+  missedValueCents           Decimal?              @db.Decimal(12, 4)
+  recommendationWasCorrect   Boolean?
+  confidence                 ConfidenceLevel
+  explanation                String
+  computedAt                 DateTime
+  createdAt                  DateTime              @default(now())
+  updatedAt                  DateTime              @updatedAt
+  user                       User                  @relation(fields: [userId], references: [id])
+  recommendationEvent        RecommendationEvent?  @relation(fields: [recommendationEventId], references: [id])
+  transaction                Transaction           @relation(fields: [transactionId], references: [id])
+  actualUserCard             UserCard?             @relation("OutcomeActualUserCard", fields: [actualUserCardId], references: [id])
+  bestUserCard               UserCard?             @relation("OutcomeBestUserCard", fields: [bestUserCardId], references: [id])
+  recommendedUserCard        UserCard?             @relation("OutcomeRecommendedUserCard", fields: [recommendedUserCardId], references: [id])
+  feedbackReports            FeedbackReport[]
+
+  @@index([userId, createdAt])
+  @@index([recommendationEventId])
+  @@index([transactionId])
+  @@index([actualUserCardId])
+  @@index([bestUserCardId])
+  @@index([recommendedUserCardId])
+}
+
+model RecommendationCorrection {
+  id                       String                   @id @default(cuid())
+  userId                   String
+  recommendationEventId    String?
+  transactionId            String?
+  correctionType           CorrectionType
+  userNote                 String?
+  status                   CorrectionStatus         @default(OPEN)
+  resolutionNotes          String?
+  createdAt                DateTime                 @default(now())
+  updatedAt                DateTime                 @updatedAt
+  user                     User                     @relation(fields: [userId], references: [id])
+  recommendationEvent      RecommendationEvent?     @relation(fields: [recommendationEventId], references: [id])
+  transaction              Transaction?             @relation(fields: [transactionId], references: [id])
+  reviewTasks              CuratorReviewTask[]
+
+  @@index([userId, status])
+  @@index([recommendationEventId])
+  @@index([transactionId])
+}
+
+model CuratorReviewTask {
+  id                String             @id @default(cuid())
+  correctionId      String?
+  taskType          ReviewTaskType
+  status            ReviewTaskStatus   @default(OPEN)
+  priority          Priority           @default(MEDIUM)
+  title             String
+  description       String?
+  resolutionNotes   String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  correction        RecommendationCorrection? @relation(fields: [correctionId], references: [id])
+
+  @@index([status, priority])
+  @@index([correctionId])
+}
+
+model PlaidConnection {
+  id                    String                 @id @default(cuid())
+  userId                String
+  itemId                String                 @unique
+  accessTokenEncrypted  String
+  institutionId         String?
+  institutionName       String?
+  status                PlaidConnectionStatus  @default(ACTIVE)
+  errorCode             String?
+  errorMessage          String?
+  lastSyncedAt          DateTime?
+  cursor                String?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  user                  User                   @relation(fields: [userId], references: [id])
+  accounts              PlaidAccount[]
+  syncRuns              PlaidSyncRun[]
+
+  @@index([userId])
+  @@index([status])
+}
+
+model PlaidAccount {
+  id                  String            @id @default(cuid())
+  userId              String
+  plaidConnectionId   String
+  accountId           String
+  name                String
+  officialName        String?
+  mask                String?
+  type                String?
+  subtype             String?
+  linkedUserCardId    String?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  user                User              @relation(fields: [userId], references: [id])
+  plaidConnection     PlaidConnection   @relation(fields: [plaidConnectionId], references: [id])
+  linkedUserCard      UserCard?         @relation(fields: [linkedUserCardId], references: [id])
+
+  @@unique([plaidConnectionId, accountId])
+  @@index([userId])
+  @@index([linkedUserCardId])
+}
+
+model PlaidSyncRun {
+  id                          String          @id @default(cuid())
+  userId                      String
+  plaidConnectionId           String
+  status                      PlaidSyncStatus
+  startedAt                   DateTime
+  finishedAt                  DateTime?
+  addedCount                  Int             @default(0)
+  modifiedCount               Int             @default(0)
+  removedCount                Int             @default(0)
+  importedTransactionCount    Int             @default(0)
+  auditedTransactionCount     Int             @default(0)
+  errorCode                   String?
+  errorMessage                String?
+  createdAt                   DateTime        @default(now())
+  updatedAt                   DateTime        @updatedAt
+  user                        User            @relation(fields: [userId], references: [id])
+  plaidConnection             PlaidConnection @relation(fields: [plaidConnectionId], references: [id])
+
+  @@index([userId])
+  @@index([plaidConnectionId])
+  @@index([status])
+}
+
+model AdminAuditLog {
+  id          String           @id @default(cuid())
+  adminUserId String?
+  action      AdminAuditAction
+  entityType  String
+  entityId    String?
+  before      Json?
+  after       Json?
+  metadata    Json?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime         @default(now())
+  adminUser   User?            @relation(fields: [adminUserId], references: [id])
+
+  @@index([adminUserId])
+  @@index([entityType])
+  @@index([entityId])
+  @@index([action])
+  @@index([createdAt])
+}
+
+model ConsentRecord {
+  id          String       @id @default(cuid())
+  userId      String
+  consentType ConsentType
+  version     String
+  grantedAt   DateTime
+  revokedAt   DateTime?
+  metadata    Json?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  user        User         @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([consentType])
+  @@index([grantedAt])
+  @@index([revokedAt])
+}
+
+model PrivacyRequest {
+  id          String               @id @default(cuid())
+  userId      String
+  requestType PrivacyRequestType
+  status      PrivacyRequestStatus
+  requestedAt DateTime
+  completedAt DateTime?
+  summary     Json?
+  notes       String?
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+  user        User                 @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([requestType])
+  @@index([status])
+  @@index([requestedAt])
+}
+
+model Subscription {
+  id                    String             @id @default(cuid())
+  userId                String
+  stripeCustomerId      String?            @unique
+  stripeSubscriptionId  String?            @unique
+  status                SubscriptionStatus
+  priceId               String?
+  productId             String?
+  currentPeriodStart    DateTime?
+  currentPeriodEnd      DateTime?
+  cancelAtPeriodEnd     Boolean            @default(false)
+  trialStart            DateTime?
+  trialEnd              DateTime?
+  canceledAt            DateTime?
+  metadata              Json?
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+  user                  User               @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([stripeCustomerId])
+  @@index([stripeSubscriptionId])
+  @@index([status])
+}
+
+model EntitlementGrant {
+  id          String             @id @default(cuid())
+  userId      String
+  key         EntitlementKey
+  active      Boolean            @default(true)
+  source      EntitlementSource
+  expiresAt   DateTime?
+  notes       String?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  user        User               @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([key])
+  @@index([active])
+  @@index([expiresAt])
+}
+
+model StripeWebhookEvent {
+  id              String              @id @default(cuid())
+  stripeEventId   String              @unique
+  type            String
+  processedAt     DateTime?
+  status          StripeWebhookStatus
+  errorMessage    String?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+}
+
+model Reminder {
+  id                  String              @id @default(cuid())
+  userId              String
+  userCardId          String?
+  statementCreditId   String?
+  reminderType        ReminderType
+  title               String
+  description         String?
+  dueAt               DateTime
+  status              ReminderStatus      @default(SCHEDULED)
+  recurrence          ReminderRecurrence?
+  lastTriggeredAt     DateTime?
+  completedAt         DateTime?
+  dismissedAt         DateTime?
+  source              ReminderSource      @default(MANUAL)
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  user                User                @relation(fields: [userId], references: [id])
+  userCard            UserCard?           @relation(fields: [userCardId], references: [id])
+  statementCredit     StatementCredit?    @relation(fields: [statementCreditId], references: [id])
+
+  @@index([userId])
+  @@index([userId, status, dueAt])
+  @@index([userCardId])
+  @@index([statementCreditId])
+}
+
+model StatementCreditUsage {
+  id                       String                       @id @default(cuid())
+  userId                   String
+  userCardId               String
+  statementCreditId        String
+  periodStart              DateTime
+  periodEnd                DateTime
+  status                   StatementCreditUsageStatus   @default(UNKNOWN)
+  amountUsedCents          Int?
+  estimatedRemainingCents  Int?
+  source                   StatementCreditUsageSource   @default(MANUAL)
+  matchedTransactionIds    Json?
+  evidence                 Json?
+  notes                    String?
+  createdAt                DateTime                     @default(now())
+  updatedAt                DateTime                     @updatedAt
+  user                     User                         @relation(fields: [userId], references: [id])
+  userCard                 UserCard                     @relation(fields: [userCardId], references: [id])
+  statementCredit          StatementCredit              @relation(fields: [statementCreditId], references: [id])
+
+  @@unique([userCardId, statementCreditId, periodStart, periodEnd])
+  @@index([userId])
+  @@index([userCardId])
+  @@index([statementCreditId])
+  @@index([userId, periodStart, periodEnd])
+}

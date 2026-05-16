@@ -1,0 +1,351 @@
+{
+  "metrics": {
+    "startDate": "2026-04-08T23:44:22.282Z",
+    "endDate": "2026-05-08T23:44:22.282Z",
+    "meaningfulMissThresholdCents": 500,
+    "annualSubscriptionPriceCents": 6900,
+    "totalUsersEvaluated": 15,
+    "totalTransactionsAudited": 117,
+    "totalOutcomes": 117,
+    "totalMatchedRecommendations": 93,
+    "usersWithAnyOutcome": 14,
+    "usersWithMeaningfulMiss": 10,
+    "percentUsersWithMeaningfulMiss": 66.66666666666666,
+    "usersAboveSubscriptionValue": 4,
+    "percentUsersAboveSubscriptionValue": 26.666666666666668,
+    "totalCapturedValueCents": 44842,
+    "totalMissedValueCents": 49005,
+    "totalMeaningfulMissedValueCents": 40900,
+    "averageMissedValuePerUserCents": 3267,
+    "averageMeaningfulMissedValuePerUserCents": 2726.6666666666665,
+    "medianMissedValuePerUserCents": 1800,
+    "medianMeaningfulMissedValuePerUserCents": 1000,
+    "recommendationErrorCount": 7,
+    "recommendationErrorRate": 0.07526881720430108,
+    "inconclusiveCount": 17,
+    "inconclusiveRate": 0.1452991452991453,
+    "userOverrideCount": 3,
+    "userOverrideRate": 0.02564102564102564,
+    "unmatchedOutcomeCount": 20,
+    "unmatchedOutcomeRate": 0.17094017094017094,
+    "correctionCount": 211,
+    "correctionsPer100Outcomes": 180.34188034188034,
+    "outcomeTypeCounts": {
+      "CAPTURED_OPTIMAL": 30,
+      "USER_MISSED_VALUE": 40,
+      "RECOMMENDATION_ERROR": 7,
+      "UNMATCHED": 20,
+      "USER_OVERRIDE": 3,
+      "INCONCLUSIVE": 17
+    },
+    "topMissCategories": [
+      {
+        "category": "DINING",
+        "count": 8,
+        "missedValueCents": 31000
+      },
+      {
+        "category": "AIRFARE",
+        "count": 1,
+        "missedValueCents": 7600
+      },
+      {
+        "category": "GENERAL",
+        "count": 1,
+        "missedValueCents": 1400
+      },
+      {
+        "category": "TRAVEL",
+        "count": 1,
+        "missedValueCents": 900
+      }
+    ],
+    "topMissMerchants": [
+      {
+        "merchantName": "Starbucks",
+        "count": 7,
+        "missedValueCents": 28800
+      },
+      {
+        "merchantName": "Delta Air Lines",
+        "count": 1,
+        "missedValueCents": 7600
+      },
+      {
+        "merchantName": "Uber Eats",
+        "count": 1,
+        "missedValueCents": 2200
+      },
+      {
+        "merchantName": "Walmart",
+        "count": 1,
+        "missedValueCents": 1400
+      },
+      {
+        "merchantName": "Airbnb",
+        "count": 1,
+        "missedValueCents": 900
+      }
+    ],
+    "topRecommendationErrorMerchants": [
+      {
+        "merchantName": "Starbucks",
+        "count": 6
+      },
+      {
+        "merchantName": "Walmart",
+        "count": 1
+      }
+    ],
+    "passFail": {
+      "passesPrimaryKillTest": true,
+      "passesTrustQualityGate": true,
+      "passesDataCompletenessGate": true,
+      "overallPass": true,
+      "reasons": ["Kill-test gates passed for this evaluation window."]
+    }
+  },
+  "users": [
+    {
+      "userId": "cmoxk59uj005m8dc0qyedjl2c",
+      "email": "eval-api-high-1778283608346-8ba370ba544578@example.com",
+      "transactionCount": 1,
+      "outcomeCount": 1,
+      "capturedValueCents": 100,
+      "missedValueCents": 8000,
+      "meaningfulMissedValueCents": 8000,
+      "meaningfulMissCount": 1,
+      "recommendationErrorCount": 0,
+      "inconclusiveCount": 0,
+      "userOverrideCount": 0,
+      "correctionCount": 0,
+      "aboveSubscriptionValue": true,
+      "hasMeaningfulMiss": true
+    },
+    {
+      "userId": "cmoxk6pq6005n8da87ta3ii3y",
+      "email": "eval-api-high-1778283675581-f4831b98e652d@example.com",
+      "transactionCount": 1,
+      "outcomeCount": 1,
+      "capturedValueCents": 100,
+      "missedValueCents": 8000,
+      "meaningfulMissedValueCents": 8000,
+      "meaningfulMissCount": 1,
+      "recommendationErrorCount": 0,
+      "inconclusiveCount": 0,
+      "userOverrideCount": 0,
+      "correctionCount": 0,
+      "aboveSubscriptionValue": true,
+      "hasMeaningfulMiss": true
+    },
+    {
+      "userId": "cmoxk9lc8005o8drkhjuxm6mq",
+      "email": "eval-api-high-1778283809847-9fb5fce90ea818@example.com",
+      "transactionCount": 1,
+      "outcomeCount": 1,
+      "capturedValueCents": 100,
+      "missedValueCents": 8000,
+      "meaningfulMissedValueCents": 8000,
+      "meaningfulMissCount": 1,
+      "recommendationErrorCount": 0,
+      "inconclusiveCount": 0,
+      "userOverrideCount": 0,
+      "correctionCount": 0,
+      "aboveSubscriptionValue": true,
+      "hasMeaningfulMiss": true
+    },
+    {
+      "userId": "cmoxkag2d00378de8ikwlefnx",
+      "email": "eval-pass-3@example.com",
+      "transactionCount": 1,
+      "outcomeCount": 1,
+      "capturedValueCents": 500,
+      "missedValueCents": 7600,
+      "meaningfulMissedValueCents": 7600,
+      "meaningfulMissCount": 1,
+      "recommendationErrorCount": 0,
+      "inconclusiveCount": 0,
+      "userOverrideCount": 0,
+      "correctionCount": 0,
+      "aboveSubscriptionValue": true,
+      "hasMeaningfulMiss": true
+    },
+    {
+      "userId": "cmoxkag1z00308de8e7u8fbiv",
+      "email": "eval-pass-2@example.com",
+      "transactionCount": 2,
+      "outcomeCount": 2,
+      "capturedValueCents": 1000,
+      "missedValueCents": 3100,
+      "meaningfulMissedValueCents": 3100,
+      "meaningfulMissCount": 2,
+      "recommendationErrorCount": 0,
+      "inconclusiveCount": 0,
+      "userOverrideCount": 0,
+      "correctionCount": 0,
+      "aboveSubscriptionValue": false,
+      "hasMeaningfulMiss": true
+    },
+    {
+      "userId": "cmoxkag19002t8de8pgrfjrjf",
+      "email": "eval-pass-1@example.com",
+      "transactionCount": 2,
+      "outcomeCount": 2,
+      "capturedValueCents": 1000,
+      "missedValueCents": 1800,
+      "meaningfulMissedValueCents": 1800,
+      "meaningfulMissCount": 1,
+      "recommendationErrorCount": 0,
+      "inconclusiveCount": 0,
+      "userOverrideCount": 0,
+      "correctionCount": 0,
+      "aboveSubscriptionValue": false,
+      "hasMeaningfulMiss": true
+    },
+    {
+      "userId": "cmoxkag37003l8de82nn9jpw7",
+      "email": "eval-error-heavy@example.com",
+      "transactionCount": 2,
+      "outcomeCount": 2,
+      "capturedValueCents": 1000,
+      "missedValueCents": 2100,
+      "meaningfulMissedValueCents": 1400,
+      "meaningfulMissCount": 1,
+      "recommendationErrorCount": 1,
+      "inconclusiveCount": 0,
+      "userOverrideCount": 1,
+      "correctionCount": 1,
+      "aboveSubscriptionValue": false,
+      "hasMeaningfulMiss": true
+    },
+    {
+      "userId": "cmoxk59uj005n8dc0lccdzubg",
+      "email": "eval-api-medium-1778283608346-e403265fcd7a18@example.com",
+      "transactionCount": 2,
+      "outcomeCount": 2,
+      "capturedValueCents": 100,
+      "missedValueCents": 1000,
+      "meaningfulMissedValueCents": 1000,
+      "meaningfulMissCount": 1,
+      "recommendationErrorCount": 1,
+      "inconclusiveCount": 1,
+      "userOverrideCount": 0,
+      "correctionCount": 0,
+      "aboveSubscriptionValue": false,
+      "hasMeaningfulMiss": true
+    },
+    {
+      "userId": "cmoxk6pq6005m8da8rnoo50h6",
+      "email": "eval-api-medium-1778283675581-38c8832d0b5f88@example.com",
+      "transactionCount": 2,
+      "outcomeCount": 2,
+      "capturedValueCents": 100,
+      "missedValueCents": 1000,
+      "meaningfulMissedValueCents": 1000,
+      "meaningfulMissCount": 1,
+      "recommendationErrorCount": 1,
+      "inconclusiveCount": 1,
+      "userOverrideCount": 0,
+      "correctionCount": 0,
+      "aboveSubscriptionValue": false,
+      "hasMeaningfulMiss": true
+    },
+    {
+      "userId": "cmoxk9lbs005m8drkzleu88mt",
+      "email": "eval-api-medium-1778283809847-333597576651a8@example.com",
+      "transactionCount": 2,
+      "outcomeCount": 2,
+      "capturedValueCents": 100,
+      "missedValueCents": 1000,
+      "meaningfulMissedValueCents": 1000,
+      "meaningfulMissCount": 1,
+      "recommendationErrorCount": 1,
+      "inconclusiveCount": 1,
+      "userOverrideCount": 0,
+      "correctionCount": 0,
+      "aboveSubscriptionValue": false,
+      "hasMeaningfulMiss": true
+    },
+    {
+      "userId": "cmoxd3gsi00008dh85yww9jt5",
+      "email": "beta@example.com",
+      "transactionCount": 126,
+      "outcomeCount": 88,
+      "capturedValueCents": 38842,
+      "missedValueCents": 7280,
+      "meaningfulMissedValueCents": 0,
+      "meaningfulMissCount": 0,
+      "recommendationErrorCount": 3,
+      "inconclusiveCount": 12,
+      "userOverrideCount": 2,
+      "correctionCount": 210,
+      "aboveSubscriptionValue": false,
+      "hasMeaningfulMiss": false
+    },
+    {
+      "userId": "cmoxkag2r003e8de8fbqsq5cq",
+      "email": "eval-low-value@example.com",
+      "transactionCount": 2,
+      "outcomeCount": 2,
+      "capturedValueCents": 1000,
+      "missedValueCents": 125,
+      "meaningfulMissedValueCents": 0,
+      "meaningfulMissCount": 0,
+      "recommendationErrorCount": 0,
+      "inconclusiveCount": 0,
+      "userOverrideCount": 0,
+      "correctionCount": 0,
+      "aboveSubscriptionValue": false,
+      "hasMeaningfulMiss": false
+    },
+    {
+      "userId": "cmoxkag3k003s8de8jezy8335",
+      "email": "eval-inconclusive@example.com",
+      "transactionCount": 2,
+      "outcomeCount": 2,
+      "capturedValueCents": 0,
+      "missedValueCents": 0,
+      "meaningfulMissedValueCents": 0,
+      "meaningfulMissCount": 0,
+      "recommendationErrorCount": 0,
+      "inconclusiveCount": 2,
+      "userOverrideCount": 0,
+      "correctionCount": 0,
+      "aboveSubscriptionValue": false,
+      "hasMeaningfulMiss": false
+    },
+    {
+      "userId": "cmoxhw39b00e98dns1069954x",
+      "email": "phase5-other@example.com",
+      "transactionCount": 1,
+      "outcomeCount": 0,
+      "capturedValueCents": 0,
+      "missedValueCents": 0,
+      "meaningfulMissedValueCents": 0,
+      "meaningfulMissCount": 0,
+      "recommendationErrorCount": 0,
+      "inconclusiveCount": 0,
+      "userOverrideCount": 0,
+      "correctionCount": 0,
+      "aboveSubscriptionValue": false,
+      "hasMeaningfulMiss": false
+    },
+    {
+      "userId": "cmoxhw20s008r8da4cutkj91u",
+      "email": "phase5-outcome-other@example.com",
+      "transactionCount": 9,
+      "outcomeCount": 9,
+      "capturedValueCents": 900,
+      "missedValueCents": 0,
+      "meaningfulMissedValueCents": 0,
+      "meaningfulMissCount": 0,
+      "recommendationErrorCount": 0,
+      "inconclusiveCount": 0,
+      "userOverrideCount": 0,
+      "correctionCount": 0,
+      "aboveSubscriptionValue": false,
+      "hasMeaningfulMiss": false
+    }
+  ],
+  "generatedAt": "2026-05-08T23:44:22.374Z"
+}

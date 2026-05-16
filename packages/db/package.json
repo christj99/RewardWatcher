@@ -1,0 +1,21 @@
+{
+  "name": "@rewards-audit/db",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@prisma/client": "6.1.0",
+    "bcryptjs": "^3.0.3"
+  },
+  "devDependencies": {
+    "vitest": "2.1.8"
+  }
+}
