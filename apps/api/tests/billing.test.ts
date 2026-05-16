@@ -7,7 +7,10 @@ import type Stripe from "stripe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { env } from "../src/config/env.js";
-import { getPlanSummary } from "../src/services/entitlementService.js";
+import {
+  getPlanSummary,
+  requireEntitlement,
+} from "../src/services/entitlementService.js";
 import {
   setStripeClientForTesting,
   type StripeClient,
@@ -54,31 +57,71 @@ describe("billing and entitlements", () => {
     expect(freePlan.plan).toBe("FREE");
     expect(freePlan.entitlements.BASIC_RECOMMENDATIONS).toBe(true);
     expect(freePlan.entitlements.FULL_TRANSACTION_AUDIT).toBe(false);
+    expect(freePlan.entitlements.WEEKLY_AUDIT_REPORT).toBe(false);
+    expect(freePlan.entitlements.STATEMENT_CREDIT_TRACKING).toBe(false);
+    expect(freePlan.entitlements.OFFER_AWARE_RECOMMENDATIONS).toBe(false);
+    expect(freePlan.entitlements.ADVANCED_LENSES).toBe(false);
+    expect(freePlan.entitlements.PLAID_SYNC).toBe(false);
+    expect(freePlan.entitlements.EXTENDED_HISTORY).toBe(false);
   });
 
-  it("active subscriptions and manual grants produce entitlements", async () => {
+  it("active, trialing, and canceled subscriptions produce expected plans", async () => {
     await buildSeededServer().then((server) => server.close());
-    const user = await prisma.user.upsert({
-      where: { email: "phase16-paid@example.com" },
-      update: {},
-      create: { email: "phase16-paid@example.com" },
-    });
     const unique = `${Date.now()}_${Math.random().toString(36).slice(2)}`;
+    const activeUser = await prisma.user.upsert({
+      where: { email: `phase16-paid-active-${unique}@example.com` },
+      update: {},
+      create: { email: `phase16-paid-active-${unique}@example.com` },
+    });
     await prisma.subscription.create({
       data: {
-        userId: user.id,
+        userId: activeUser.id,
         status: SubscriptionStatus.ACTIVE,
         stripeCustomerId: `cus_${unique}`,
         stripeSubscriptionId: `sub_${unique}`,
       },
     });
+    expect((await getPlanSummary(activeUser.id)).plan).toBe("PREMIUM");
 
-    expect((await getPlanSummary(user.id)).plan).toBe("PREMIUM");
+    const trialingUser = await prisma.user.create({
+      data: { email: `phase16-paid-trialing-${unique}@example.com` },
+    });
+    await prisma.subscription.create({
+      data: {
+        userId: trialingUser.id,
+        status: SubscriptionStatus.TRIALING,
+        stripeCustomerId: `cus_trialing_${unique}`,
+        stripeSubscriptionId: `sub_trialing_${unique}`,
+      },
+    });
+    const trialingPlan = await getPlanSummary(trialingUser.id);
+    expect(trialingPlan.plan).toBe("PREMIUM");
+    expect(trialingPlan.entitlements.PLAID_SYNC).toBe(true);
 
+    const canceledUser = await prisma.user.create({
+      data: { email: `phase16-paid-canceled-${unique}@example.com` },
+    });
+    await prisma.subscription.create({
+      data: {
+        userId: canceledUser.id,
+        status: SubscriptionStatus.CANCELED,
+        stripeCustomerId: `cus_canceled_${unique}`,
+        stripeSubscriptionId: `sub_canceled_${unique}`,
+      },
+    });
+    const canceledPlan = await getPlanSummary(canceledUser.id);
+    expect(canceledPlan.plan).toBe("FREE");
+    expect(canceledPlan.entitlements.BASIC_RECOMMENDATIONS).toBe(true);
+    expect(canceledPlan.entitlements.FULL_TRANSACTION_AUDIT).toBe(false);
+  });
+
+  it("manual and founding beta grants produce expected entitlements", async () => {
+    await buildSeededServer().then((server) => server.close());
+    const unique = `${Date.now()}_${Math.random().toString(36).slice(2)}`;
     const grantUser = await prisma.user.upsert({
-      where: { email: "phase16-grant@example.com" },
+      where: { email: `phase16-grant-${unique}@example.com` },
       update: {},
-      create: { email: "phase16-grant@example.com" },
+      create: { email: `phase16-grant-${unique}@example.com` },
     });
     await prisma.entitlementGrant.create({
       data: {
@@ -96,8 +139,31 @@ describe("billing and entitlements", () => {
       },
     });
     const grantPlan = await getPlanSummary(grantUser.id);
+    expect(grantPlan.plan).toBe("BETA_GRANT");
     expect(grantPlan.entitlements.PLAID_SYNC).toBe(true);
     expect(grantPlan.entitlements.WEEKLY_AUDIT_REPORT).toBe(false);
+
+    const beta = await prisma.user.findUniqueOrThrow({
+      where: { email: "beta@example.com" },
+    });
+    const betaPlan = await getPlanSummary(beta.id);
+    expect(betaPlan.plan).toBe("BETA_GRANT");
+    expect(betaPlan.entitlements.EXTENDED_HISTORY).toBe(true);
+  });
+
+  it("requireEntitlement throws the expected entitlement error", async () => {
+    await buildSeededServer().then((server) => server.close());
+    const free = await prisma.user.findUniqueOrThrow({
+      where: { email: "free@example.com" },
+    });
+
+    await expect(
+      requireEntitlement(free.id, EntitlementKey.PLAID_SYNC),
+    ).rejects.toMatchObject({
+      statusCode: 403,
+      code: "ENTITLEMENT_REQUIRED",
+      details: { entitlement: EntitlementKey.PLAID_SYNC },
+    });
   });
 
   it("returns billing status and creates checkout and portal sessions with mocked Stripe", async () => {
